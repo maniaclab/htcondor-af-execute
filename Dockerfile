@@ -72,6 +72,9 @@ COPY sysview-client/client /usr/lib/python3.6/site-packages/sysview/client
 COPY scripts/condor_node_check.sh /usr/local/sbin/
 COPY scripts/entrypoint.sh /bin/entrypoint.sh
 
+COPY prometheus/exporter.py /app/
+RUN pip3 install prometheus_client
+
 RUN chmod 755 /usr/local/sbin/condor_node_check.sh
 
 # Igor's wrapper for singularity to make things work inside of K8S, requires OASIS CVMFS
