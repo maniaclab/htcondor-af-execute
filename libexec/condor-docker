@@ -79,7 +79,7 @@ def main():
         if args.publish:
             for i, port in enumerate(args.publish):
                 if port.isdigit():
-                    args.publish[i] = str(port_reserve()) + ':' + port
+                    args.publish[i] = '127.0.0.1:' + str(port_reserve()) + ':' + port
 
         # Put our parsed options back into the list
         for arg, vals in vars(args).items():
