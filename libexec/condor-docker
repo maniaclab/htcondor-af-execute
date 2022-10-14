@@ -73,13 +73,19 @@ def main():
 
         args, docker_opts = parser.parse_known_args()
 
+        ## getting the hostname by socket.gethostname() method
+        hostname = socket.gethostname()
+        ## getting the IP address using socket.gethostbyname() method
+        ip_address = socket.gethostbyname(hostname)
+
+
         # Docker (occasionally) doesn't reserve the same port for both IPv4 and IPv6
         # - https://github.com/moby/libnetwork/issues/2639
         # If no host port is specified, reserve one ourselves
         if args.publish:
             for i, port in enumerate(args.publish):
                 if port.isdigit():
-                    args.publish[i] = '127.0.0.1:' + str(port_reserve()) + ':' + port
+                    args.publish[i] = ip_address + ':' + str(port_reserve(ip=ip_address)) + ':' + port
 
         # Put our parsed options back into the list
         for arg, vals in vars(args).items():
