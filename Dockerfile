@@ -41,7 +41,7 @@ RUN yum install --enablerepo=osg-upcoming -y condor
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum install -y docker-ce-cli
-RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/mwt2-sysview-worker-2.0.3-1.noarch.rpm
+RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/mwt2-sysview-worker-2.0.5-1.noarch.rpm
 RUN yum install -y python36-tabulate
 
 COPY condor/*.conf /etc/condor/config.d/
