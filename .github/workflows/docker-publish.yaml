@@ -86,7 +86,7 @@ jobs:
           tag_list=()
           tag_list+=(${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:"latest")
           tag_list+=(${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TIMESTAMP)
-          tag_list=("execute-3.6-gpu")
+          tag_list=(${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:"execute-3.6-gpu")
           # This causes the tag_list array to be comma-separated below,
           # which is required for build-push-action
           IFS=,
