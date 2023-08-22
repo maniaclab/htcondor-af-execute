@@ -8,11 +8,11 @@ on:
 #  schedule:
 #    - cron: '41 9 * * *'
   push:
-    branches: [ master, gpu ]
+    branches: [ master, gpu, htcondor-10 ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ master, gpu ]
+    branches: [ master, gpu, htcondor-10 ]
 
 env:
   # Dockhub
@@ -86,6 +86,7 @@ jobs:
           tag_list=()
           tag_list+=(${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:"latest")
           tag_list+=(${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TIMESTAMP)
+          tag_list=("execute-3.6-gpu")
           # This causes the tag_list array to be comma-separated below,
           # which is required for build-push-action
           IFS=,

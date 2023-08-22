@@ -2,6 +2,7 @@
 
 import os
 import time
+from subprocess import check_call
 from prometheus_client import start_http_server, Gauge, Enum
 import requests
 
@@ -12,7 +13,7 @@ class AppMetrics:
     application metrics into Prometheus metrics.
     """
 
-    def __init__(self, paths=None, app_port=80, polling_interval_seconds=5):
+    def __init__(self, paths=None, app_port=80, polling_interval_seconds=30):
         self.app_port = app_port
         self.polling_interval_seconds = polling_interval_seconds
         if not paths:  
@@ -55,10 +56,17 @@ class AppMetrics:
         #self.total_uptime.set(status_data["total_uptime"])
 
         for p in self.paths:
-            if os.path.exists(p):
-                self.health.labels(path=p).state("healthy")
-            else:
+            try:
+                check_call(['test', '-e', p], timeout=10)
+            except:
                 self.health.labels(path=p).state("unhealthy")
+            else:
+                self.health.labels(path=p).state("healthy")
+            # thread could stuck in D wait and result will be stale
+            #if os.path.exists(p):
+            #    self.health.labels(path=p).state("healthy")
+            #else:
+            #    self.health.labels(path=p).state("unhealthy")
 
 def main():
     """Main entry point"""
