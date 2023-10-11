@@ -39,9 +39,9 @@ RUN yum install http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/HEP_OSlibs-7.2.9
 RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm
 RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
 RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/D42D0685.pub
-# These match the NVIDIA settings on the AF as of September 2022
-RUN yum install -y nvidia-driver-branch-470-470.57.02
-RUN yum install -y cuda-11-0
+# These match the NVIDIA settings on the AF as of Oct 2023
+RUN yum install -y nvidia-driver-branch-535
+RUN yum install -y cuda-12-2
 
 RUN yum install --enablerepo=osg-upcoming -y condor
 
