@@ -40,7 +40,7 @@ RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel
 RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
 RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/D42D0685.pub
 # These match the NVIDIA settings on the AF as of Oct 2023
-RUN yum install -y nvidia-driver-branch-535
+RUN yum localinstall -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/nvidia-driver-branch-535-535.86.10-1.el7.x86_64.rpm
 RUN yum install -y cuda-12-2
 
 RUN yum install --enablerepo=osg-upcoming -y condor
