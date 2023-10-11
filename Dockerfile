@@ -33,15 +33,17 @@ RUN yum install -y \
   man-db \
   telnet 
 
-RUN yum install http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/HEP_OSlibs-7.2.9-1.el7.cern.x86_64.rpm -y
-
 # Install GPU libraries
-RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm
-RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
-RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/D42D0685.pub
-# These match the NVIDIA settings on the AF as of Oct 2023
-RUN yum localinstall -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/nvidia-driver-branch-535-535.86.10-1.el7.x86_64.rpm
-RUN yum install -y cuda-12-2
+COPY repo/cuda.repo /etc/yum.repos.d/cuda.repo
+COPY repo/nvidia.repo /etc/yum.repos.d/nvidia.repo
+RUN yum install cuda-12-2 nvidia-driver-latest-dkms -y
+
+#RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm
+#RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
+#RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/D42D0685.pub
+## These match the NVIDIA settings on the AF as of Oct 2023
+#RUN yum localinstall -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/nvidia-driver-branch-535-535.86.10-1.el7.x86_64.rpm
+#RUN yum install -y cuda-12-2
 
 RUN yum install --enablerepo=osg-upcoming -y condor
 
