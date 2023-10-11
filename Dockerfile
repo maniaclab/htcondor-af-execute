@@ -36,7 +36,8 @@ RUN yum install -y \
 # Install GPU libraries
 COPY repo/cuda.repo /etc/yum.repos.d/cuda.repo
 COPY repo/nvidia.repo /etc/yum.repos.d/nvidia.repo
-RUN yum install cuda-12-2 nvidia-driver-latest-dkms -y
+RUN yum install nvidia-driver-latest-dkms-535.86.10 -y
+RUN yum install cuda-12-1 -y 
 
 #RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm
 #RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
