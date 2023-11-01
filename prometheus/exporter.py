@@ -5,6 +5,8 @@ import time
 from subprocess import check_call
 from prometheus_client import start_http_server, Gauge, Enum
 import requests
+import threading
+import sys
 
 
 class AppMetrics:
@@ -37,6 +39,10 @@ class AppMetrics:
         """Metrics fetching loop"""
 
         while True:
+            if threading.active_count() != 2:
+                print(f"Unexpected threadcount: {threading.active_count()}, so exit the program")
+                sys.exit(1)
+
             self.fetch()
             time.sleep(self.polling_interval_seconds)
 
