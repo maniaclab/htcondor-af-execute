@@ -46,7 +46,6 @@ RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/mwt2-sysview-
 RUN yum install -y python36-tabulate
 
 COPY condor/*.conf /etc/condor/config.d/
-COPY cron/* /etc/cron.d/
 COPY supervisor/* /etc/supervisord.d/
 COPY image-config/* /etc/osg/image-config.d/
 COPY libexec/* /usr/local/libexec/
