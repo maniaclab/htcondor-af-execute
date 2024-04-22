@@ -42,7 +42,7 @@ RUN yum install --disablerepo=osg-upcoming -y condor
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum install -y docker-ce-cli
-RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/mwt2-sysview-worker-2.0.5-1.noarch.rpm
+RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/mwt2-sysview-worker-2.0.6-1.el7.noarch.rpm
 RUN yum install -y python36-tabulate
 
 COPY condor/*.conf /etc/condor/config.d/
@@ -55,6 +55,7 @@ COPY scripts/entrypoint.sh /bin/entrypoint.sh
 COPY prometheus/exporter.py /app/
 RUN pip3 install prometheus_client
 
+RUN pip3 install python3-memcached
 RUN chmod 755 /usr/local/sbin/condor_node_check.sh
 
 # Igor's wrapper for singularity to make things work inside of K8S, requires OASIS CVMFS
