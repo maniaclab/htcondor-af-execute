@@ -13,8 +13,14 @@ chmod +x $CONNECT_DIR/sync_users.sh
 pushd $CONNECT_DIR
 echo "token=$API_TOKEN" > $CONNECT_DIR/token
 export API_TOKEN_FILE=$CONNECT_DIR/token
+# Random sleep to prevent thundering herd.
+sleep $((RANDOM%300))
 $CONNECT_DIR/sync_users.sh -u root.atlas-af -g root.atlas-af -e https://api.ci-connect.net:18080
 popd
 
 echo 'export PATH="$PATH:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"' >> $CONNECT_DIR/config
 echo "export API_TOKEN_FILE=$CONNECT_DIR/token" >> $CONNECT_DIR/config
+
+###############################################################################
+# Set up periodic syncs with randomized jitter to avoid hammering the API too hard
+echo '*/10 * * * * root ( sleep $((RANDOM%300)) && cd /usr/local/ciconnect && source /usr/local/ciconnect/config && ./sync_users.sh -u root.atlas-af -g root.atlas-af -e https://api.ci-connect.net:18080 ) >> /var/log/provisioner.log 2>&1' > /etc/cron.d/sync_users.cron

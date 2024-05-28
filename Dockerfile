@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=hub.opensciencegrid.org/opensciencegrid/software-base:3.6-el7-release
+ARG BASE_IMAGE=hub.opensciencegrid.org/opensciencegrid/software-base:23-el9-release
 FROM ${BASE_IMAGE}
 ARG BASE_IMAGE
 
@@ -12,22 +12,13 @@ RUN yum install -y \
   git \ 
   bc \
   bind-utils \
-  cpio \
-  ed \
-  file \
-  bzip2 \ 
-  gnupg2 \
   libaio \
-  rdate \ 
   rng-tools \ 
   rsync \ 
   tcsh \ 
   time \ 
   wget \
-  which \ 
   words \ 
-  xz \ 
-  zip \
   yum-utils \ 
   dos2unix \
   man-db \
@@ -46,15 +37,17 @@ RUN yum install cuda-12-1 -y
 #RUN yum localinstall -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/nvidia-driver-branch-535-535.86.10-1.el7.x86_64.rpm
 #RUN yum install -y cuda-12-2
 
-RUN yum install --enablerepo=osg-upcoming -y condor
+RUN yum install -y https://linuxsoft.cern.ch/wlcg/centos7/x86_64/wlcg-repo-1.0.0-1.el7.noarch.rpm
+RUN yum install -y https://linuxsoft.cern.ch/wlcg/el9/x86_64/wlcg-repo-1.0.0-1.el9.noarch.rpm 
+RUN yum install -y HEP_OSlibs
+RUN yum install -y condor
+RUN yum install -y python3-pip
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum install -y docker-ce-cli
-RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el7/mwt2-sysview-worker-2.0.5-1.noarch.rpm
-RUN yum install -y python36-tabulate
+RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el9/mwt2-sysview-worker-2.0.6-1.noarch.rpm
 
 COPY condor/*.conf /etc/condor/config.d/
-COPY cron/* /etc/cron.d/
 COPY supervisor/* /etc/supervisord.d/
 COPY image-config/* /etc/osg/image-config.d/
 COPY libexec/* /usr/local/libexec/
@@ -62,8 +55,10 @@ COPY scripts/condor_node_check.sh /usr/local/sbin/
 COPY scripts/entrypoint.sh /bin/entrypoint.sh
 
 COPY prometheus/exporter.py /app/
-RUN pip3 install prometheus_client
 
+RUN pip install prometheus_client
+
+RUN pip install python3-memcached
 RUN chmod 755 /usr/local/sbin/condor_node_check.sh
 
 # Igor's wrapper for singularity to make things work inside of K8S, requires OASIS CVMFS
