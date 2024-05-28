@@ -25,10 +25,16 @@ RUN yum install -y \
   telnet 
 
 # Install GPU libraries
-COPY repo/cuda.repo /etc/yum.repos.d/cuda.repo
-COPY repo/nvidia.repo /etc/yum.repos.d/nvidia.repo
-RUN yum install nvidia-driver-latest-dkms-535.86.10 -y
-RUN yum install cuda-12-1 -y 
+#COPY repo/cuda.repo /etc/yum.repos.d/cuda.repo
+#COPY repo/nvidia.repo /etc/yum.repos.d/nvidia.repo
+#RUN yum install nvidia-driver-latest-dkms-535.86.10 -y
+#RUN yum install cuda-12-1 -y 
+
+RUN  dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
+RUN  dnf clean expire-cache
+RUN  dnf module install nvidia-driver:latest-dkms
+RUN  dnf install cuda-toolkit
+RUN  dnf install nvidia-gds
 
 #RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm
 #RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
