@@ -32,9 +32,9 @@ RUN yum install -y \
 
 RUN  dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
 RUN  dnf clean expire-cache
-RUN  dnf module install nvidia-driver:latest-dkms
-RUN  dnf install cuda-toolkit
-RUN  dnf install nvidia-gds
+RUN  dnf module install -y nvidia-driver:latest-dkms
+RUN  dnf install -y cuda-toolkit
+RUN  dnf install -y nvidia-gds
 
 #RUN yum install -y https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-10.2.89-1.x86_64.rpm
 #RUN rpm --import http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/7fa2af80.pub
