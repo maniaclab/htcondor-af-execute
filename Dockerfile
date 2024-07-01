@@ -51,6 +51,9 @@ RUN chmod 755 /usr/local/sbin/condor_node_check.sh
 # Igor's wrapper for singularity to make things work inside of K8S, requires OASIS CVMFS
 ADD scripts/singularity_npid.sh /usr/bin/singularity
 
+# Symlink python3 to python for certain jobs to work correctly
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
 ENTRYPOINT ["/bin/entrypoint.sh"]
 # Adding ENTRYPOINT clears CMD
 CMD ["/usr/local/sbin/supervisord_startup.sh"]
