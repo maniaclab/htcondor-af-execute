@@ -54,6 +54,9 @@ ADD scripts/singularity_npid.sh /usr/bin/singularity
 # Symlink python3 to python for certain jobs to work correctly
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
+# Add the cron wrapper to hopefully prevent any weird issues with periodic sync
+ADD scripts/sync_users_wrapper.sh /usr/local/bin/sync_users_wrapper.sh
+
 ENTRYPOINT ["/bin/entrypoint.sh"]
 # Adding ENTRYPOINT clears CMD
 CMD ["/usr/local/sbin/supervisord_startup.sh"]
