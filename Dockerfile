@@ -55,7 +55,7 @@ ADD scripts/singularity_npid.sh /usr/bin/singularity
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Add the cron wrapper to hopefully prevent any weird issues with periodic sync
-ADD scripts/sync_users_wrapper.sh /usr/local/bin/sync_users_wrapper.sh
+ADD scripts/sync_users_wrapper.sh /usr/local/sbin/sync_users_wrapper.sh
 
 ENTRYPOINT ["/bin/entrypoint.sh"]
 # Adding ENTRYPOINT clears CMD
