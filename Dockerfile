@@ -24,7 +24,7 @@ RUN yum install -y \
   man-db \
   telnet 
 
-# Install GPU libraries
+#Install GPU libraries
 #COPY repo/cuda.repo /etc/yum.repos.d/cuda.repo
 #COPY repo/nvidia.repo /etc/yum.repos.d/nvidia.repo
 #RUN yum install nvidia-driver-latest-dkms-535.86.10 -y
