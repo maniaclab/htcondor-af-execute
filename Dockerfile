@@ -32,7 +32,7 @@ RUN yum install -y python3-pip
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum install -y docker-ce-cli
-RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el9/mwt2-sysview-worker-2.0.6-1.noarch.rpm
+RUN yum install -y http://mirror.grid.uchicago.edu/pub/mwt2/sw/el9/mwt2-sysview-worker-2.0.9-1.noarch.rpm
 
 COPY condor/*.conf /etc/condor/config.d/
 COPY supervisor/* /etc/supervisord.d/
