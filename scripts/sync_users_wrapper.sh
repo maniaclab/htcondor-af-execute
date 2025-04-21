@@ -1,5 +1,5 @@
 #!/bin/bash
-TIME=$((RANDOM%300))
+TIME=$((RANDOM%900))
 echo "Sleeping for $TIME seconds"
 sleep $TIME
 cd /usr/local/ciconnect 
