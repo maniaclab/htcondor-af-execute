@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=hub.opensciencegrid.org/opensciencegrid/software-base:23-el9-release
+ARG BASE_IMAGE=hub.opensciencegrid.org/opensciencegrid/software-base:24-el9-release
 FROM ${BASE_IMAGE}
 ARG BASE_IMAGE
 
