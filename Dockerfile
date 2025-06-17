@@ -30,34 +30,30 @@ RUN yum install -y \
   netbird \
   HEP_OSlibs \
   condor \
-  python3-pip \
-  python3-prometheus_client \
-  python3-memcached
+  python3-pip
+  
 
-RUN yum install -y https://mirror.grid.uchicago.edu/pub/mwt2/sw/el9/mwt2-sysview-worker-2.0.19-1.el9.noarch.rpm
+# Skip the node check
+COPY condor/01-*.conf /etc/condor/config.d/
+# Copy single-user stuff into place
+COPY condor/03-*.conf /etc/condor/config.d/
+# Copy more glidein stuff
+#COPY condor/50-*.conf /etc/condor/config.d/
 
-# Add Docker-CE for Docker-in-Docker
-RUN yum install -y docker-ce-cli
 
-COPY condor/*.conf /etc/condor/config.d/
+# Supervisor configuration
+COPY single-user/supervisord.conf /etc/supervisord.conf
 COPY supervisor/* /etc/supervisord.d/
-COPY image-config/* /etc/osg/image-config.d/
-COPY libexec/* /usr/local/libexec/
-COPY scripts/condor_node_check.sh /usr/local/sbin/
-COPY scripts/entrypoint.sh /bin/entrypoint.sh
-COPY prometheus/exporter.py /app/
 
-RUN chmod 755 /usr/local/sbin/condor_node_check.sh
+# Any additional start-time configuration
+COPY image-config/10-condor-cfg.sh /etc/osg/image-config.d/
 
-# Igor's wrapper for singularity to make things work inside of K8S, requires OASIS CVMFS
-ADD scripts/singularity_npid.sh /usr/bin/singularity
-
-# Symlink python3 to python for certain jobs to work correctly
-RUN ln -s /usr/bin/python3 /usr/bin/python
+#COPY scripts/entrypoint.sh /bin/entrypoint.sh
 
 # Add the cron wrapper to hopefully prevent any weird issues with periodic sync
-ADD scripts/sync_users_wrapper.sh /usr/local/sbin/sync_users_wrapper.sh
+#ADD scripts/sync_users_wrapper.sh /usr/local/sbin/sync_users_wrapper.sh
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+#ENTRYPOINT ["/bin/entrypoint.sh"]
 # Adding ENTRYPOINT clears CMD
+WORKDIR /pilot
 CMD ["/usr/local/sbin/supervisord_startup.sh"]
