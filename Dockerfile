@@ -37,9 +37,6 @@ RUN yum install -y \
 COPY condor/01-*.conf /etc/condor/config.d/
 # Copy single-user stuff into place
 COPY condor/03-*.conf /etc/condor/config.d/
-# Copy more glidein stuff
-#COPY condor/50-*.conf /etc/condor/config.d/
-
 
 # Supervisor configuration
 COPY single-user/supervisord.conf /etc/supervisord.conf
@@ -48,12 +45,5 @@ COPY supervisor/* /etc/supervisord.d/
 # Any additional start-time configuration
 COPY image-config/10-condor-cfg.sh /etc/osg/image-config.d/
 
-#COPY scripts/entrypoint.sh /bin/entrypoint.sh
-
-# Add the cron wrapper to hopefully prevent any weird issues with periodic sync
-#ADD scripts/sync_users_wrapper.sh /usr/local/sbin/sync_users_wrapper.sh
-
-#ENTRYPOINT ["/bin/entrypoint.sh"]
-# Adding ENTRYPOINT clears CMD
 WORKDIR /pilot
 CMD ["/usr/local/sbin/supervisord_startup.sh"]
