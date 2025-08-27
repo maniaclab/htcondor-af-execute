@@ -27,7 +27,7 @@ RUN yum install -y \
 RUN yum install -y https://linuxsoft.cern.ch/wlcg/centos7/x86_64/wlcg-repo-1.0.0-1.el7.noarch.rpm
 RUN yum install -y https://linuxsoft.cern.ch/wlcg/el9/x86_64/wlcg-repo-1.0.0-1.el9.noarch.rpm 
 RUN yum install -y HEP_OSlibs
-RUN yum install -y condor
+RUN yum install -y condor-24.0.11-1.el9
 RUN yum install -y python3-pip
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
