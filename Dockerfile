@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=hub.opensciencegrid.org/opensciencegrid/software-base:24-el9-release
+ARG BASE_IMAGE=hub.opensciencegrid.org/opensciencegrid/software-base:25-el9-release
 FROM ${BASE_IMAGE}
 ARG BASE_IMAGE
 
@@ -27,7 +27,7 @@ RUN yum install -y \
 RUN yum install -y https://linuxsoft.cern.ch/wlcg/centos7/x86_64/wlcg-repo-1.0.0-1.el7.noarch.rpm
 RUN yum install -y https://linuxsoft.cern.ch/wlcg/el9/x86_64/wlcg-repo-1.0.0-1.el9.noarch.rpm 
 RUN yum install -y HEP_OSlibs
-RUN yum install -y condor-24.0.11-1.el9
+RUN yum install -y condor-25.0.3-1.el9
 RUN yum install -y python3-pip
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
