@@ -19,6 +19,7 @@ chown condor:condor /var/log/condor
 usermod -aG docker condor
 
 # Chown the scratch dir
+mkdir -p /scratch
 chown -R condor: /scratch
 
 chmod +x /usr/local/libexec/condor-docker
